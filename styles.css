@@ -1,0 +1,9 @@
+#mainTable {
+    border: 2px solid #9ABAC2;
+}
+
+td {
+    background-color: #49ABE6;
+    width: 75px;
+    height: 75px;
+}
