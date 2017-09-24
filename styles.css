@@ -13,28 +13,32 @@
 }
 #leftTable td:hover {
     background-color: #CB4C46;
+    cursor: pointer;
 }
 #topTable td {
     background-color: #B20000;
 }
 #topTable td:hover {
     background-color: #CB4C46;
+    cursor: pointer;
 }
 
 #rightTable {
     border-top: 2px solid #FFF;
 }
 #rightTable td {
-    background-color: #F1A105
+    background-color: #F1A105;
 }
 #rightTable td:hover {
-    background-color: #F6C053
+    background-color: #F6C053;
+    cursor: pointer;
 }
 #bottomTable td {
-    background-color: #F1A105
+    background-color: #F1A105;
 }
 #bottomTable td:hover {
-    background-color: #F6C053
+    background-color: #F6C053;
+    cursor: pointer;
 }
 
 #dummyTables {
