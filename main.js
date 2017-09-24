@@ -15,23 +15,36 @@ function singleRowToMain() {
 }
 
 function singleRowToDelCol() {
-    delColTable.insertRow(0).insertCell(0).innerHTML = delSymbol;
+    delColTable.insertRow(0);
+    singleColToDelCol();
 }
 
-function singleColToDelCol(position = 0) {
-    delColTable.rows[0].insertCell(position).innerHTML = delSymbol;
+function singleColToDelCol(id = 0) {
+    let cell = delColTable.rows[0].insertCell(id),
+        searchId = `col-${id}`;
+    cell.innerHTML = delSymbol;
+    cell.id = searchId;
+    cell.onclick = () => deleteCol(searchId);
 }
 
-function singleRowToDelRow() {
-    delRowTable.insertRow(0).insertCell(0).innerHTML = delSymbol;
+function singleRowToDelRow(id = 0) {
+    let cell = delRowTable.insertRow(id).insertCell(0),
+        searchId = `col-${id}`;
+    cell.innerHTML = delSymbol;
+    cell.id = searchId;
+    cell.onclick = () => deleteRow(searchId);
 }
 
 function singleRowToAppendCol() {
-    let cell = appendColTable.insertRow(0).insertCell(0).innerHTML = addSymbol;
+    let cell = appendColTable.insertRow(0).insertCell(0);
+    cell.innerHTML = addSymbol;
+    cell.onclick = () => appendCol();
 }
 
 function singleRowToAppendRow() {
-    appendRowTable.insertRow(0).insertCell(0).innerHTML = addSymbol;
+    let cell = appendRowTable.insertRow(0).insertCell(0);
+    cell.innerHTML = addSymbol;
+    cell.onclick = () => appendRow();
 }
 
 function initTables() {
@@ -58,7 +71,7 @@ function appendRow(times = 1) {
         let row = mainTable.insertRow(rowsNum + i);
         appendCol(colsNum, row);
 
-        singleRowToDelRow();
+        singleRowToDelRow(rowsNum + i);
     }
 }
 
@@ -82,6 +95,37 @@ function appendCol(times = 1, row) {
             singleColToDelCol(colsNum + i);
         }
     }
+}
+
+/**
+ * Method for deleting row by id
+ */
+function deleteRow(id) {
+    if (!id && id !==0) {
+        return;
+    }
+    let index = document.getElementById(id).rowIndex;
+    mainTable.deleteRow(index);
+    delRowTable.deleteRow(index);
+}
+
+/**
+ * Method for deleting column by id
+ */
+function deleteCol(id) {
+    if (!id && id !==0) {
+        return;
+    }
+    let index = document.getElementById(id).cellIndex;
+    colsNum = mainTable.rows[0].cells.length;
+    for (let row of mainTable.rows) {
+        for (let i=0; i < colsNum; i++) {
+            if (i === index) {
+                row.deleteCell(index);
+            }
+        }
+    }
+    delColTable.rows[0].deleteCell(index);
 }
 
 initTables();
