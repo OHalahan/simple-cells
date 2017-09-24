@@ -1,9 +1,74 @@
 #mainTable {
     border: 2px solid #9ABAC2;
 }
+#mainTable td {
+    background-color: #49ABE6;
+}
+
+#leftTable {
+    border-top: 2px solid #FFF;
+}
+#leftTable td {
+    background-color: #B20000;
+}
+#leftTable td:hover {
+    background-color: #CB4C46;
+}
+#topTable td {
+    background-color: #B20000;
+}
+#topTable td:hover {
+    background-color: #CB4C46;
+}
+
+#rightTable {
+    border-top: 2px solid #FFF;
+}
+#rightTable td {
+    background-color: #F1A105
+}
+#rightTable td:hover {
+    background-color: #F6C053
+}
+#bottomTable td {
+    background-color: #F1A105
+}
+#bottomTable td:hover {
+    background-color: #F6C053
+}
+
+#dummyTables {
+    border-left: 2px solid #FFF;
+}
+#dummyTables td {
+    background-color: #FFF;
+}
 
 td {
-    background-color: #49ABE6;
     width: 75px;
     height: 75px;
+    color: #FFF;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    -webkit-transition: background-color .5s linear;
+    -moz-transition: background-color .5s linear;
+    -ms-transition: background-color .5s linear;
+    -o-transition: background-color .5s linear;
+    transition: background-color .5s linear;
+}
+
+.tables-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-table-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.top-bottom-groups {
+    display: flex;
+    flex-direction: row;
 }
