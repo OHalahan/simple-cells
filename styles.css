@@ -10,13 +10,18 @@
 }
 #leftTable td {
     background-color: #B20000;
+    visibility: hidden;
 }
 #leftTable td:hover {
     background-color: #CB4C46;
     cursor: pointer;
+    visibility: visible;
+    transition: visibility 0s, opacity 15s linear;
 }
+
 #topTable td {
     background-color: #B20000;
+    visibility: hidden;
 }
 #topTable td:hover {
     background-color: #CB4C46;
