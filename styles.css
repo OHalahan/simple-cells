@@ -27,7 +27,7 @@
 }
 
 #leftTable {
-    border-top: 2px solid #FFF;
+    border-top: 2px solid none;
 }
 #leftTable td {
     background-color: #B20000;
@@ -68,10 +68,10 @@
 }
 
 #dummyTables {
-    border-left: 2px solid #FFF;
+    border-left: 2px solid none;
 }
 #dummyTables td {
-    background-color: #FFF;
+    background-color: none;
 }
 
 td {
