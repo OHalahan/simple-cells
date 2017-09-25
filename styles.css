@@ -37,7 +37,6 @@
     background-color: #CB4C46;
     cursor: pointer;
     visibility: visible;
-    transition: visibility 0s, opacity 15s linear;
 }
 
 #topTable td {
