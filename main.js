@@ -11,10 +11,9 @@ let addSymbol = "+",
     delSymbol = "-";
 
 function singleRowToMain(id = 0) {
-    let row = mainTable.insertRow(id),
-        searchId = `row-${id}`;
-    row.onmouseover = () => showDelRow(searchId);
-    row.onmouseout = () => hideDelRow(searchId);
+    let row = mainTable.insertRow(id);
+    row.onmouseover = () => showDelRow(row);
+    row.onmouseout = () => hideDelRow(row);
 
     return row;
 }
@@ -23,12 +22,9 @@ function cellToMain(id, row) {
     if ((!id && id !== 0) || !row) {
         return;
     }
-    let cell = row.insertCell(id),
-        searchId = `col-${id}`;
-    cell.onmouseover = () => showDelCol(searchId);
-    cell.onmouseout = () => hideDelCol(searchId);
-
-    return cell;
+    let cell = row.insertCell(id);
+    cell.onmouseover = () => showDelCol(cell);
+    cell.onmouseout = () => hideDelCol(cell);
 }
 
 function singleRowToDelCol() {
@@ -37,23 +33,21 @@ function singleRowToDelCol() {
 }
 
 function singleColToDelCol(id = 0) {
-    let cell = delColTable.rows[0].insertCell(id),
-        searchId = `col-${id}`;
+    let cell = delColTable.rows[0].insertCell(id);
     cell.innerHTML = delSymbol;
-    cell.id = searchId;
-    cell.onclick = () => deleteCol(searchId);
-    cell.onmouseover = () => showDelCol(searchId);
-    cell.onmouseout = () => hideDelCol(searchId);
+    cell.onclick = () => deleteCols(cell);
+    cell.onmouseover = () => showDelCol(cell);
+    cell.onmouseout = () => hideDelCol(cell);
 }
 
 function singleRowToDelRow(id = 0) {
-    let cell = delRowTable.insertRow(id).insertCell(0),
-        searchId = `row-${id}`;
+    let row = delRowTable.insertRow(id),
+        cell = row.insertCell(0);
     cell.innerHTML = delSymbol;
-    cell.id = searchId;
-    cell.onclick = () => deleteRow(searchId);
-    cell.onmouseover = () => showDelRow(searchId);
-    cell.onmouseout = () => hideDelRow(searchId);
+
+    cell.onclick = () => deleteRows(row);
+    cell.onmouseover = () => showDelRow(row);
+    cell.onmouseout = () => hideDelRow(row);
 }
 
 function singleRowToAppendCol() {
@@ -124,11 +118,11 @@ function appendCol(times = 1, row) {
 /**
  * Method for deleting row by id
  */
-function deleteRow(id) {
-    if (!id && id !== 0) {
+function deleteRows(row) {
+    if (!row) {
         return;
     }
-    let index = document.getElementById(id).rowIndex;
+    let index = row.rowIndex;
     mainTable.deleteRow(index);
     delRowTable.deleteRow(index);
 }
@@ -136,18 +130,14 @@ function deleteRow(id) {
 /**
  * Method for deleting column by id
  */
-function deleteCol(id) {
-    if (!id && id !== 0) {
+function deleteCols(cell) {
+    if (!cell) {
         return;
     }
-    let index = document.getElementById(id).cellIndex;
+    let index = cell.cellIndex;
     colsNum = mainTable.rows[0].cells.length;
     for (let row of mainTable.rows) {
-        for (let i=0; i < colsNum; i++) {
-            if (i === index) {
-                row.deleteCell(index);
-            }
-        }
+        row.deleteCell(index);
     }
     delColTable.rows[0].deleteCell(index);
 }
@@ -155,48 +145,70 @@ function deleteCol(id) {
 /**
  * Method for making 'delete row' button visible
  */
-function showDelRow(id) {
-    if (!id && id !== 0) {
-        return;
-    } else if (delRowTable.rows.length === 1) {
-        document.getElementById(id).style.visibility = "hidden";
+function showDelRow(row) {
+    if (!row) {
         return;
     }
-    document.getElementById(id).style.visibility = "visible";
+    let id = row.rowIndex;
+    if (delRowTable.rows.length === 1) {
+        changeStyleProp(delRowTable, id, "hidden");
+        return;
+    }
+    changeStyleProp(delRowTable, id, "visible");
 }
 
 /**
  * Method for hiding 'delete row' when mouse leaves row
  */
-function hideDelRow(id) {
-    if (!id && id !== 0) {
+function hideDelRow(row) {
+    if (!row) {
         return;
     }
-    document.getElementById(id).style.visibility = "hidden";
+
+    changeStyleProp(delRowTable, row.rowIndex, "hidden");
 }
 
 /**
  * Method for making 'delete column' button visible
  */
-function showDelCol(id) {
-    if (!id && id !== 0) {
-        return;
-    } else if (delColTable.rows[0].cells.length === 1) {
-        document.getElementById(id).style.visibility = "hidden";
+function showDelCol(cell) {
+    if (!cell) {
         return;
     }
-    document.getElementById(id).style.visibility = "visible";
+    let id = cell.cellIndex;
+    if (delColTable.rows[0].cells.length === 1) {
+        changeStyleProp(id, "hidden");
+        return;
+    }
+    changeStyleProp(delColTable, id, "visible");
 }
 
 /**
- * Method for hiding 'delete column' when mouse leaves row
+ * Method for hiding 'delete column' button when mouse leaves column
  */
-function hideDelCol(id) {
-    if (!id && id !== 0) {
+function hideDelCol(cell) {
+    if (!cell) {
         return;
     }
-    document.getElementById(id).style.visibility = "hidden";
+    changeStyleProp(delColTable, cell.cellIndex, "hidden");
 }
 
+/**
+ * Method for making element visible/hidden
+ */
+function changeStyleProp(table, index, action) {
+    if (!table || (!index && index !== 0) || !action) {
+        return;
+    }
+    let elem;
+    if (table.id === "topTable") {
+        elem = delColTable.rows[0].cells[index];
+    } else {
+        elem = delRowTable.rows[index].cells[0];
+    }
+    if (elem) {
+        elem.style.visibility = action;
+    }
+}
 
 initTables();
